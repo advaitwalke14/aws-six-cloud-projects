@@ -9,12 +9,14 @@ This file records only the read-only results reported during the current review.
 - Private IPv4 address existed in a VPC using the `10.0.0.0/16` range.
 - IMDSv2 tokens were required.
 - No IAM instance profile was attached.
-- The shown security group allowed SSH from one single-host `/32` source.
-- No inbound TCP port `3306` rule was shown in that security group.
+- The `secure-mysql-sg` security group allowed inbound SSH (TCP/22) from one IPv4 `/32` source and an AWS-managed prefix list. Outbound IPv4 traffic was allowed to `0.0.0.0/0`.
+- No inbound TCP port `3306` rule was present in that security group.
 - Attached volume: 8 GiB `gp3`, encrypted: `false`, delete-on-termination: `true`.
 - No matching snapshot was returned for the current volume ID.
 - SSM instance-information query returned no row for the instance.
-- VPC routing inspected so far did not show an internet route for the `10.0.0.0/16` VPC route table. A separate S3 gateway endpoint was available.
+- The route table associated with the EC2 subnet had an active `0.0.0.0/0` route to an internet gateway. The instance had no public IPv4 address during this review; the route alone does not prove public reachability.
+- A separate S3 gateway endpoint was available.
+- The subnet network ACL allowed all IPv4 inbound and outbound traffic under rule 100; it does not provide restrictive IPv4 filtering.
 
 ## Not proven by the above
 
