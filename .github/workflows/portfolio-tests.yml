@@ -1,0 +1,70 @@
+﻿name: Portfolio Local Checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  local-checks:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Project 3 test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pytest -r .\project-3-advanced-s3-product-images\requirements.txt
+      - name: Project 1 - Check required files
+        run: .\scripts\check-local-files.ps1
+        working-directory: project-1-secure-mysql-ec2
+      - name: Project 2 - Check Python syntax
+        run: python -m py_compile .\app.py
+        working-directory: project-2-ecs-ecr
+      - name: Project 3 - Run image application tests
+        run: python -m pytest -v .\tests
+        working-directory: project-3-advanced-s3-product-images
+      - name: Project 4 - Run local simulation
+        run: python .\chaos_simulation.py
+        working-directory: project-4-auto-scaling
+      - name: Project 4 - Run automated tests
+        run: python -m unittest discover -s tests -v
+        working-directory: project-4-auto-scaling
+      - name: Project 5 - Run failover simulation
+        run: python .\simulate_failover.py
+        working-directory: project-5-route53-acm-waf
+      - name: Project 5 - Run automated tests
+        run: python -m unittest discover -s tests -v
+        working-directory: project-5-route53-acm-waf
+      - name: Project 5 - Validate configuration
+        run: python .\scripts\validate_config.py
+        working-directory: project-5-route53-acm-waf
+      - name: Project 6 - Run local demo
+        run: python .\scripts\run_demo.py
+        working-directory: project-6-cloudfront-lambda-edge
+      - name: Project 6 - Run Python tests
+        run: python -m unittest discover -s tests -v
+        working-directory: project-6-cloudfront-lambda-edge
+      - name: Project 6 - Validate configuration
+        run: python .\scripts\validate_config.py
+        working-directory: project-6-cloudfront-lambda-edge
+      - name: Project 6 - Simulate regional cache results
+        run: python .\scripts\simulate_cache_regions.py
+        working-directory: project-6-cloudfront-lambda-edge
+      - name: Project 6 - Check JavaScript syntax
+        run: node --check .\lambda\index.js
+        working-directory: project-6-cloudfront-lambda-edge
+      - name: Project 6 - Run JavaScript tests
+        run: node .\tests\test_lambda_edge.js
+        working-directory: project-6-cloudfront-lambda-edge
