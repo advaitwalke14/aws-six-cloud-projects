@@ -41,3 +41,8 @@ A successful run means the local logic restored its simulated minimum capacity a
 - No live Auto Scaling group or Application Load Balancer was deployed and tested.
 - Real Spot interruptions, launch lifecycle-action completion, and zero downtime are not verified.
 - The lifecycle-hook event consumer remains a documented design, not an implementation.
+## Completion Status
+**Local chaos simulation and automated tests: VERIFIED (6 tests passed).**
+**CloudFormation reference template: Validation accepted in `ap-south-1`; no stack was created.**
+**Live Auto Scaling group and ALB: NOT DEPLOYED.**
+Real Spot interruption handling, lifecycle-action completion, and zero-downtime recovery remain unverified.

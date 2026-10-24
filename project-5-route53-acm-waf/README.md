@@ -47,3 +47,7 @@ All commands are local only. The validator checks the example configuration file
 - WAF managed rules can block legitimate traffic. Start in count mode, inspect logs, then move selected rules to block mode.
 - Route 53 health-check behavior and DNS caching mean failover is not instantaneous.
 - This repository intentionally does not include a deploy command.
+## Completion Status
+**Local simulations and automated tests: VERIFIED.**
+**Live AWS deployment: NOT COMPLETED.** Route 53, ACM, CloudFront, ALB, and WAF deployment and failover behavior remain unverified.
+The project remains local-only. Do not deploy billable resources while maintaining a strict ₹0 additional-spend requirement.
