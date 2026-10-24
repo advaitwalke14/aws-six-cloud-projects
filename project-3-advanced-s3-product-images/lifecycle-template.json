@@ -1,0 +1,10 @@
+{
+  "Rules": [
+    {
+      "ID": "expire-demo-uploads",
+      "Status": "Enabled",
+      "Filter": { "Prefix": "temporary/" },
+      "Expiration": { "Days": 7 }
+    }
+  ]
+}

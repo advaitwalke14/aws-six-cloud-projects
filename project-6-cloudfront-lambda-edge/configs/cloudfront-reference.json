@@ -1,0 +1,45 @@
+{
+  "project": "project-6-cloudfront-lambda-edge",
+  "execution_mode": "local-reference-only",
+  "creates_aws_resources": false,
+  "s3_origin": {
+    "origin_type": "S3 REST endpoint",
+    "bucket_public_access_block": true,
+    "origin_access_control": {
+      "enabled": true,
+      "signing_behavior": "always",
+      "signing_protocol": "sigv4"
+    },
+    "bucket_policy_intent": "Allow s3:GetObject only to the specified CloudFront distribution using the CloudFront service principal and SourceArn condition",
+    "note": "Reference only; this policy is not applied."
+  },
+  "lambda_at_edge": {
+    "region": "us-east-1",
+    "publish_numbered_version": true,
+    "events": [
+      "viewer-request",
+      "origin-response"
+    ],
+    "note": "Associate only the event(s) needed. No Lambda function is deployed."
+  },
+  "private_assets": {
+    "use_cloudfront_signed_urls": true,
+    "trusted_key_group": "REPLACE_WITH_CLOUDFRONT_TRUSTED_KEY_GROUP_ID",
+    "short_lived_url_target_ttl_seconds": 300,
+    "note": "CloudFront native signed URL/key-group flow is not implemented by the local HMAC simulation."
+  },
+  "image_optimization": {
+    "strategy": "pre-generate-WebP-locally-and-rewrite-to-existing-sibling-object",
+    "accepted_format_header": "Accept",
+    "note": "The WebP object must exist in S3. No on-demand image conversion is run at the edge."
+  },
+  "cache_validation": {
+    "local_simulation": true,
+    "real_multi_region_validation": false,
+    "real_validation_options": [
+      "CloudFront access logs",
+      "CloudWatch metrics",
+      "controlled requests from remote regions"
+    ]
+  }
+}

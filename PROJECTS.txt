@@ -1,0 +1,5 @@
+Six-project starter bundle.
+These are starter code/scripts, not a claim that all six projects are deployed or tested.
+Before running any AWS-changing command, verify the account, region, and likely costs.
+Project 3 bucket name is a placeholder; replace it with your own bucket name.
+Project 4/5/6 scripts are inventory/read-only helpers; they do not create billable resources.

@@ -1,0 +1,31 @@
+﻿{
+  "Rules": [
+    {
+      "ID": "expire-demo-uploads",
+      "Status": "Enabled",
+      "Filter": {
+        "Prefix": "temporary/"
+      },
+      "Expiration": {
+        "Days": 7
+      }
+    },
+    {
+      "ID": "archive-product-images-example",
+      "Status": "Enabled",
+      "Filter": {
+        "Prefix": "archive/"
+      },
+      "Transitions": [
+        {
+          "Days": 30,
+          "StorageClass": "INTELLIGENT_TIERING"
+        },
+        {
+          "Days": 180,
+          "StorageClass": "GLACIER"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "lifecycleHookName": "pre-traffic-warmup",
+  "lifecycleTransition": "autoscaling:EC2_INSTANCE_LAUNCHING",
+  "heartbeatTimeoutSeconds": 300,
+  "defaultResult": "CONTINUE",
+  "requiredRealImplementation": [
+    "Create an EventBridge rule for the EC2 Instance-launch Lifecycle Action event.",
+    "Route the event to a worker (for example, Lambda) that performs idempotent migrations and readiness checks.",
+    "Call CompleteLifecycleAction with CONTINUE only after success; call ABANDON or allow timeout on failure.",
+    "Keep secrets in a managed secret store, not user data or source control."
+  ],
+  "note": "This JSON is documentation only; it does not create an AWS lifecycle hook."
+}

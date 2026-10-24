@@ -1,0 +1,17 @@
+{
+  "name": "Example-Static-Assets-Cache-Policy",
+  "mode": "reference-only",
+  "default_ttl_seconds": 86400,
+  "max_ttl_seconds": 31536000,
+  "min_ttl_seconds": 0,
+  "cache_key_notes": [
+    "If response variants differ based on Accept, ensure the request rewrite makes the chosen format's URI a distinct cache key.",
+    "Keep query strings and cookies out of the cache key unless the origin response actually varies by them.",
+    "Never cache private signed assets as public; use a separate behavior and CloudFront native trusted key groups."
+  ],
+  "local_response_rules": {
+    "static_asset": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=600",
+    "html": "public, max-age=0, s-maxage=60, must-revalidate",
+    "private_asset": "private, no-store"
+  }
+}

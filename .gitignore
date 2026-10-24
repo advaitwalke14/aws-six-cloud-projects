@@ -1,0 +1,46 @@
+﻿# Credentials and secrets
+.env
+.env.*
+!.env.example
+.aws/
+**/*.pem
+**/*.ppk
+**/*.key
+**/credentials
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+# Node and build output
+node_modules/
+dist/
+build/
+*.log
+# Editor and OS files
+.vscode/
+.DS_Store
+Thumbs.db
+# Duplicate working copies
+project-6-cloudfront-lambda-edge-backup-*/
+project5-free-build/
+# Secrets and private keys
+*.pem
+*.ppk
+*.pfx
+*.p12
+*.key
+
+# Python caches and virtual environments
+
+# Terraform state
+*.tfstate
+*.tfstate.*
+.terraform/
+
+# Logs and local files
+
+# Extra backup folders
+/project-6-cloudfront-lambda-edge-backup-*/
+/project5-free-build*/

@@ -1,0 +1,147 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >-
+  Reference-only example for an EC2 Auto Scaling group using mixed On-Demand/Spot
+  capacity, a launch lifecycle hook, CPU target tracking, and ALB request tracking.
+  Do not deploy for the strict-zero-cost lab: EC2/Spot, ALB and CloudWatch can cost money.
+
+Parameters:
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+    Description: VPC that contains all supplied subnets.
+  VpcSubnets:
+    Type: List<AWS::EC2::Subnet::Id>
+    Description: At least two subnets in distinct Availability Zones.
+  TargetGroupArn:
+    Type: String
+    Description: ARN of an existing Application Load Balancer target group.
+  ALBSecurityGroupId:
+    Type: AWS::EC2::SecurityGroup::Id
+    Description: Security group attached to the existing ALB.
+  InstanceProfileName:
+    Type: String
+    Description: Existing EC2 instance profile name with only required permissions.
+  ImageId:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64
+  ALBResourceLabel:
+    Type: String
+    Description: ALB full-name/target-group full-name label required for ALBRequestCountPerTarget.
+  MinSize:
+    Type: Number
+    Default: 3
+    MinValue: 2
+  DesiredCapacity:
+    Type: Number
+    Default: 4
+    MinValue: 2
+  MaxSize:
+    Type: Number
+    Default: 8
+    MinValue: 3
+
+Resources:
+  ApplicationInstanceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Permit HTTP only from the existing ALB security group
+      VpcId: !Ref VpcId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          SourceSecurityGroupId: !Ref ALBSecurityGroupId
+      Tags:
+        - Key: Name
+          Value: project4-asg-instance-sg
+
+  ApplicationLaunchTemplate:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateData:
+        ImageId: !Ref ImageId
+        IamInstanceProfile:
+          Name: !Ref InstanceProfileName
+        SecurityGroupIds:
+          - !Ref ApplicationInstanceSecurityGroup
+        MetadataOptions:
+          HttpTokens: required
+          HttpEndpoint: enabled
+        UserData:
+          Fn::Base64: !Sub |
+            #!/bin/bash
+            set -eux
+            dnf install -y nginx
+            cat > /usr/share/nginx/html/index.html <<'HTML'
+            <!doctype html><html><head><title>Auto Scaling Demo</title></head>
+            <body><h1>Project 4 Auto Scaling Demo</h1><p>Instance is serving.</p></body></html>
+            HTML
+            cat > /usr/share/nginx/html/health <<'HEALTH'
+            healthy
+            HEALTH
+            systemctl enable --now nginx
+
+  ApplicationAutoScalingGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      MinSize: !Ref MinSize
+      MaxSize: !Ref MaxSize
+      DesiredCapacity: !Ref DesiredCapacity
+      VPCZoneIdentifier: !Ref VpcSubnets
+      HealthCheckType: ELB
+      HealthCheckGracePeriod: 180
+      TargetGroupARNs:
+        - !Ref TargetGroupArn
+      MixedInstancesPolicy:
+        InstancesDistribution:
+          OnDemandBaseCapacity: 1
+          OnDemandPercentageAboveBaseCapacity: 50
+          OnDemandAllocationStrategy: prioritized
+          SpotAllocationStrategy: price-capacity-optimized
+        LaunchTemplate:
+          LaunchTemplateSpecification:
+            LaunchTemplateId: !Ref ApplicationLaunchTemplate
+            Version: !GetAtt ApplicationLaunchTemplate.LatestVersionNumber
+          Overrides:
+            - InstanceType: t3.micro
+            - InstanceType: t3a.micro
+      Tags:
+        - Key: Name
+          Value: project4-mixed-asg
+          PropagateAtLaunch: true
+
+  LaunchWarmupLifecycleHook:
+    Type: AWS::AutoScaling::LifecycleHook
+    Properties:
+      AutoScalingGroupName: !Ref ApplicationAutoScalingGroup
+      LifecycleHookName: pre-traffic-warmup
+      LifecycleTransition: autoscaling:EC2_INSTANCE_LAUNCHING
+      HeartbeatTimeout: 300
+      DefaultResult: CONTINUE
+
+  CpuTargetTrackingPolicy:
+    Type: AWS::AutoScaling::ScalingPolicy
+    Properties:
+      AutoScalingGroupName: !Ref ApplicationAutoScalingGroup
+      PolicyType: TargetTrackingScaling
+      TargetTrackingConfiguration:
+        PredefinedMetricSpecification:
+          PredefinedMetricType: ASGAverageCPUUtilization
+        TargetValue: 70.0
+        DisableScaleIn: false
+
+  AlbRequestsTargetTrackingPolicy:
+    Type: AWS::AutoScaling::ScalingPolicy
+    Properties:
+      AutoScalingGroupName: !Ref ApplicationAutoScalingGroup
+      PolicyType: TargetTrackingScaling
+      TargetTrackingConfiguration:
+        PredefinedMetricSpecification:
+          PredefinedMetricType: ALBRequestCountPerTarget
+          ResourceLabel: !Ref ALBResourceLabel
+        TargetValue: 1000.0
+        DisableScaleIn: false
+
+Outputs:
+  AutoScalingGroupName:
+    Description: Name of the example mixed-instances group
+    Value: !Ref ApplicationAutoScalingGroup

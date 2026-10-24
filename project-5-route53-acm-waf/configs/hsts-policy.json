@@ -1,0 +1,15 @@
+{
+  "policyName": "Project5-HTTPS-HSTS-Reference",
+  "securityHeadersConfig": {
+    "strictTransportSecurity": {
+      "accessControlMaxAgeSec": 31536000,
+      "includeSubdomains": true,
+      "override": true,
+      "preload": false
+    },
+    "contentTypeOptions": {"override": true},
+    "frameOptions": {"frameOption": "DENY", "override": true},
+    "referrerPolicy": {"referrerPolicy": "strict-origin-when-cross-origin", "override": true}
+  },
+  "note": "Reference only. Validate application compatibility before enabling HSTS in production."
+}

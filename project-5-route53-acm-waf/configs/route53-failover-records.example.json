@@ -1,0 +1,22 @@
+{
+  "warning": "Illustrative only — contains placeholders and is not a ready-to-run AWS CLI payload.",
+  "records": [
+    {
+      "name": "YOUR_DOMAIN_HERE",
+      "type": "A (Alias)",
+      "setIdentifier": "primary-site",
+      "failover": "PRIMARY",
+      "evaluateTargetHealth": true,
+      "target": "YOUR_PRIMARY_CLOUDFRONT_DISTRIBUTION"
+    },
+    {
+      "name": "YOUR_DOMAIN_HERE",
+      "type": "A (Alias)",
+      "setIdentifier": "maintenance-site",
+      "failover": "SECONDARY",
+      "evaluateTargetHealth": true,
+      "target": "YOUR_MAINTENANCE_CLOUDFRONT_DISTRIBUTION"
+    }
+  ],
+  "note": "Real routing requires valid hosted zone, alias targets and a tested health/failover design. Route 53 health checks and hosted zones may incur charges."
+}

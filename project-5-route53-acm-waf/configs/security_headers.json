@@ -1,0 +1,16 @@
+{
+  "viewer_protocol_policy": "redirect-to-https",
+  "strict_transport_security": {
+    "enabled": true,
+    "max_age_seconds": 31536000,
+    "include_subdomains": true,
+    "preload": false
+  },
+  "additional_headers": {
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Content-Security-Policy": "default-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'"
+  },
+  "note": "Example only. Validate CSP against the real application before production use."
+}

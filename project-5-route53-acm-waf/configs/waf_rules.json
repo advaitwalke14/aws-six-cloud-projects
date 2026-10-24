@@ -1,0 +1,37 @@
+{
+  "mode": "reference-only",
+  "default_action": "ALLOW",
+  "recommended_initial_mode": "COUNT",
+  "managed_rule_groups": [
+    {
+      "name": "AWSManagedRulesCommonRuleSet",
+      "priority": 10,
+      "override_action": "COUNT"
+    },
+    {
+      "name": "AWSManagedRulesKnownBadInputsRuleSet",
+      "priority": 20,
+      "override_action": "COUNT"
+    },
+    {
+      "name": "AWSManagedRulesAmazonIpReputationList",
+      "priority": 30,
+      "override_action": "COUNT"
+    }
+  ],
+  "cloudfront_web_acl": {
+    "scope": "CLOUDFRONT",
+    "region": "us-east-1"
+  },
+  "alb_web_acl": {
+    "scope": "REGIONAL",
+    "region": "same-region-as-alb"
+  },
+  "production_checklist": [
+    "Enable WAF logging to an approved destination",
+    "Review sampled requests and false positives",
+    "Keep managed rule groups in COUNT mode during initial observation",
+    "Move rules to BLOCK only after testing",
+    "Verify the web ACL is associated with the intended distribution or ALB"
+  ]
+}

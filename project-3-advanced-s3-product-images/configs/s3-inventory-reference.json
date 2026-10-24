@@ -1,0 +1,26 @@
+﻿{
+  "Id": "product-image-inventory-example",
+  "IsEnabled": true,
+  "IncludedObjectVersions": "Current",
+  "Schedule": {
+    "Frequency": "Weekly"
+  },
+  "OptionalFields": [
+    "Size",
+    "LastModifiedDate",
+    "StorageClass",
+    "ETag",
+    "EncryptionStatus"
+  ],
+  "Destination": {
+    "S3BucketDestination": {
+      "AccountId": "REPLACE_WITH_ACCOUNT_ID",
+      "Bucket": "arn:aws:s3:::REPLACE_WITH_INVENTORY_DESTINATION_BUCKET",
+      "Format": "CSV",
+      "Prefix": "inventory/product-images",
+      "Encryption": {
+        "SSES3": {}
+      }
+    }
+  }
+}

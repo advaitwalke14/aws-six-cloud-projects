@@ -1,0 +1,40 @@
+{
+  "project": "project-5-route53-acm-waf",
+  "mode": "local-reference-only",
+  "aws_api_calls": false,
+  "route53": {
+    "routing_policy": "failover",
+    "primary_record": "primary.example.invalid",
+    "secondary_record": "maintenance.example.invalid",
+    "health_check": "primary-endpoint-health-check",
+    "note": "Illustrative names only; no hosted zone or health check is created."
+  },
+  "acm": {
+    "cloudfront_certificate_region": "us-east-1",
+    "alb_certificate_region": "same-region-as-alb",
+    "validation": "DNS",
+    "note": "No certificate is requested or issued."
+  },
+  "cloudfront": {
+    "viewer_protocol_policy": "redirect-to-https",
+    "security_headers_policy": "configs/security_headers.json"
+  },
+  "alb": {
+    "listener_protocol": "HTTPS",
+    "certificate_region": "same-region-as-alb",
+    "note": "ALB is optional in the static CloudFront maintenance path and can incur charges."
+  },
+  "waf": {
+    "cloudfront_scope": "CLOUDFRONT",
+    "cloudfront_web_acl_region": "us-east-1",
+    "regional_alb_scope": "REGIONAL",
+    "regional_alb_web_acl_region": "same-region-as-alb",
+    "managed_rule_groups": [
+      "AWSManagedRulesCommonRuleSet",
+      "AWSManagedRulesKnownBadInputsRuleSet",
+      "AWSManagedRulesAmazonIpReputationList"
+    ],
+    "initial_action": "COUNT",
+    "note": "Example policy only; tune and test before enabling BLOCK."
+  }
+}
