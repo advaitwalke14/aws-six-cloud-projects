@@ -1,0 +1,197 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <meta name="description" content="Six AWS-focused cloud engineering projects covering databases, containers, storage, scaling, web security, and edge computing.">
+  <title>Cloud Projects Portfolio</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b1120;
+      --panel: #121d30;
+      --line: #28374d;
+      --text: #edf3ff;
+      --muted: #a5b4cc;
+      --accent: #7dd3fc;
+      --green: #86efac;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(ellipse at 12% 0%, #193353 0, transparent 42%),
+        var(--bg);
+      color: var(--text);
+      font: 16px/1.65 system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    a { color: var(--accent); }
+    a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+    .wrap { width: min(1080px, 90%); margin: auto; }
+    header { padding: 24px 0; }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 18px; flex-wrap: wrap;
+    }
+    .brand { font-weight: 800; letter-spacing: .03em; }
+    .nav a { text-decoration: none; margin-left: 18px; color: var(--muted); }
+    .hero { padding: 75px 0 64px; }
+    .eyebrow {
+      color: var(--accent); text-transform: uppercase;
+      letter-spacing: .16em; font-size: .8rem; font-weight: 800;
+    }
+    h1 {
+      max-width: 800px; margin: 16px 0;
+      font-size: clamp(2.4rem, 7vw, 4.6rem);
+      letter-spacing: -.055em; line-height: 1.08;
+    }
+    .lead { color: var(--muted); max-width: 720px; font-size: 1.1rem; }
+    .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 26px; }
+    .btn {
+      display: inline-block; padding: 11px 17px; border-radius: 10px;
+      background: var(--accent); color: #082032; font-weight: 800;
+      text-decoration: none;
+    }
+    .btn.secondary { background: transparent; border: 1px solid var(--line); color: var(--text); }
+    section { padding: 30px 0 55px; }
+    h2 { font-size: clamp(1.7rem, 4vw, 2.3rem); letter-spacing: -.03em; }
+    .section-intro { color: var(--muted); max-width: 720px; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .card {
+      border: 1px solid var(--line); background: rgba(18,29,48,.92);
+      border-radius: 16px; padding: 23px; display: flex; flex-direction: column;
+    }
+    .number { color: var(--accent); font-size: .82rem; font-weight: 800; letter-spacing: .12em; }
+    h3 { font-size: 1.23rem; line-height: 1.35; margin: 10px 0; }
+    .card p { color: var(--muted); margin: 0 0 15px; }
+    .status {
+      align-self: flex-start; border: 1px solid #3b526b; border-radius: 7px;
+      padding: 4px 8px; font-size: .78rem; margin: 0 0 15px; color: var(--green);
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 7px; margin: 0 0 20px; }
+    .tag { background: #1d2c43; color: #cbd9ee; border-radius: 6px; padding: 4px 8px; font-size: .78rem; }
+    .card-link { margin-top: auto; font-weight: 700; text-decoration: none; }
+    .note {
+      border-left: 3px solid var(--accent); padding: 14px 18px;
+      background: #111d30; color: var(--muted); border-radius: 0 9px 9px 0;
+    }
+    .about { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+    footer { border-top: 1px solid var(--line); padding: 25px 0 38px; color: var(--muted); font-size: .9rem; }
+    @media (max-width: 680px) {
+      .grid, .about { grid-template-columns: 1fr; }
+      .hero { padding-top: 45px; }
+      .nav a { margin-left: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <div class="brand">CLOUD / PORTFOLIO</div>
+      <nav aria-label="Main navigation">
+        <a href="#projects">Projects</a>
+        <a href="#about">About</a>
+        <a href="https://github.com/advaitwalke14/aws-six-cloud-projects">GitHub</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="hero wrap">
+      <div class="eyebrow">Cloud Engineering Portfolio</div>
+      <h1>Building and testing cloud-focused projects.</h1>
+      <p class="lead">
+        Six projects exploring AWS architecture, database and network security,
+        containerization, object storage, scaling, web protection, and edge computing.
+        Each project includes code, documentation, and validation evidence.
+      </p>
+      <div class="actions">
+        <a class="btn" href="#projects">Explore the projects ↓</a>
+        <a class="btn secondary" href="https://github.com/advaitwalke14/aws-six-cloud-projects">View GitHub repository ↗</a>
+      </div>
+    </section>
+    <section id="projects" class="wrap">
+      <h2>Selected projects</h2>
+      <p class="section-intro">
+        These projects combine local tests, configuration validation, simulations,
+        and selected AWS configuration reviews. Live deployment is not claimed
+        where it has not been verified.
+      </p>
+      <div class="grid">
+        <article class="card">
+          <div class="number">PROJECT 01</div>
+          <h3>Secure MySQL on EC2</h3>
+          <p>Review a MySQL/MariaDB deployment, security-group rules, network routing, TLS diagnostics, and recovery considerations.</p>
+          <div class="status">Local file check passed · Security review in progress</div>
+          <div class="tags"><span class="tag">EC2</span><span class="tag">MySQL</span><span class="tag">Networking</span></div>
+          <a class="card-link" href="https://github.com/advaitwalke14/aws-six-cloud-projects/tree/main/project-1-secure-mysql-ec2">View project →</a>
+        </article>
+        <article class="card">
+          <div class="number">PROJECT 02</div>
+          <h3>ECS / ECR Container Demo</h3>
+          <p>Build a Docker image and verify a healthy local container, non-root execution, and an HTTP health endpoint.</p>
+          <div class="status">Local Docker verification passed</div>
+          <div class="tags"><span class="tag">Docker</span><span class="tag">Python</span><span class="tag">ECS / ECR design</span></div>
+          <a class="card-link" href="https://github.com/advaitwalke14/aws-six-cloud-projects/tree/main/project-2-ecs-ecr">View project →</a>
+        </article>
+        <article class="card">
+          <div class="number">PROJECT 03</div>
+          <h3>S3 Product Images</h3>
+          <p>Explore a product-image application, storage lifecycle references, and private-content delivery design.</p>
+          <div class="status">Local tests passed · Live S3 integration unverified</div>
+          <div class="tags"><span class="tag">S3</span><span class="tag">Python</span><span class="tag">Storage lifecycle</span></div>
+          <a class="card-link" href="https://github.com/advaitwalke14/aws-six-cloud-projects/tree/main/project-3-advanced-s3-product-images">View project →</a>
+        </article>
+        <article class="card">
+          <div class="number">PROJECT 04</div>
+          <h3>Auto Scaling</h3>
+          <p>Study scaling configuration, lifecycle-hook examples, and simulated failure and recovery scenarios.</p>
+          <div class="status">Local tests and simulation passed</div>
+          <div class="tags"><span class="tag">EC2</span><span class="tag">Auto Scaling</span><span class="tag">Testing</span></div>
+          <a class="card-link" href="https://github.com/advaitwalke14/aws-six-cloud-projects/tree/main/project-4-auto-scaling">View project →</a>
+        </article>
+        <article class="card">
+          <div class="number">PROJECT 05</div>
+          <h3>Route 53, ACM and WAF</h3>
+          <p>Validate example security configurations and test DNS failover behavior through local simulations.</p>
+          <div class="status">Local validation passed · Live services unverified</div>
+          <div class="tags"><span class="tag">Route 53</span><span class="tag">ACM</span><span class="tag">WAF</span></div>
+          <a class="card-link" href="https://github.com/advaitwalke14/aws-six-cloud-projects/tree/main/project-5-route53-acm-waf">View project →</a>
+        </article>
+        <article class="card">
+          <div class="number">PROJECT 06</div>
+          <h3>CloudFront and Lambda@Edge</h3>
+          <p>Explore edge-function logic, cache policies, image optimization, and simulated regional behavior.</p>
+          <div class="status">Local tests passed · Live edge execution unverified</div>
+          <div class="tags"><span class="tag">CloudFront</span><span class="tag">Lambda@Edge</span><span class="tag">Caching</span></div>
+          <a class="card-link" href="https://github.com/advaitwalke14/aws-six-cloud-projects/tree/main/project-6-cloudfront-lambda-edge">View project →</a>
+        </article>
+      </div>
+    </section>
+    <section id="about" class="wrap">
+      <h2>Approach and verification</h2>
+      <div class="about">
+        <div>
+          <h3>What this portfolio demonstrates</h3>
+          <p class="section-intro">Cloud-oriented development, infrastructure configuration, local testing, troubleshooting, and technical documentation.</p>
+        </div>
+        <div class="note">
+          <strong>Transparency note</strong><br>
+          Passing local tests does not prove that a service is deployed or working in AWS.
+          Project status labels identify what has actually been tested and what remains unverified.
+          Check each README for setup instructions and limitations.
+        </div>
+      </div>
+      <div class="actions">
+        <a class="btn" href="https://github.com/advaitwalke14/aws-six-cloud-projects">Browse all source code ↗</a>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="wrap">
+      Cloud Engineering Portfolio · Source code and project documentation on GitHub.
+    </div>
+  </footer>
+</body>
+</html>
